@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  php:
+    build: .
+    container_name: php_booker
+    tty: true
+    ports:
+      - "8081:80"
+    volumes:
+      - "./../app:/var/www/html/:rw"
+    links:
+      - mysql
+    environment:
+      SITE1: autoshop.local
+
+  mysql:
+    image: mysql
+    container_name: mysql_booker
+    hostname: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: temp123
+      MYSQL_DATABASE: bookShop
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: temp123
+    ports:
+        - 3307:3306
+    volumes:
+        - ./../app/autoshop.local/www/database:/docker-entrypoint-initdb.d
